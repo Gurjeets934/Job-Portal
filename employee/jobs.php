@@ -27,6 +27,18 @@ include 'sidebar.php';
       $sql= "SELECT * from appliedjobs,posts where appliedjobs.appliedid=posts.postid and appliedjobs.email='$email'";
     
       $result=$conn->query($sql);
+      function custom_echo($x, $length)
+            {
+               if(strlen($x)<=$length)
+               {
+               echo "<p class='card-text'>$x</p>";
+               }
+               else
+               {
+               $y=substr($x,0,$length) . "...";
+               echo "<p class='card-text'>$y</p>";
+               }
+            }
 
       if($result->num_rows>0)
       {
@@ -34,6 +46,7 @@ include 'sidebar.php';
           {
             $file=$row['resume'];
             $id=$row['id'];
+            $postid=$row['postid'];
     echo "
     <tbody style='margin:5px 5px 5px 5px;'>
     <tr>
@@ -61,7 +74,11 @@ include 'sidebar.php';
     
       </td>
       <td>
-        <p class='fw-normal mb-1'>".$row['description']."</p>
+        <p class='fw-normal mb-1'>
+        
+        ";
+        custom_echo($row['description'],60);
+        echo "</p>
       </td>
       <td><p class='fw-normal mb-1'>".$row['salary']."</p></td>
       
@@ -69,7 +86,7 @@ include 'sidebar.php';
         <p class='fw-normal mb-1'>".$row['status']."</p>
         </td>
         <td>
-        <p class='fw-normal mb-1'><a href='viewjob.php?id=$id' class='btn btn-warning btn-sm btn-rounded mb-1'>View</a></p>
+        <p class='fw-normal mb-1'><a href='viewjob.php?id=$postid' class='btn btn-warning btn-sm btn-rounded mb-1'>View</a></p>
         <p calss='fw-normal mb-1'><a href='editjob.php?id=$id' class='btn btn-primary btn-sm btn-rounded mb-1'>Edit</a></p>
         <p class='text-muted mb-0'><a href='deletejob.php?id=$id' class='btn btn-danger btn-sm btn-rounded'>Delete</a></p>
       </td>
